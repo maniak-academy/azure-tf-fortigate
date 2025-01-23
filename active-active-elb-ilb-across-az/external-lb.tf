@@ -84,7 +84,7 @@ resource "azurerm_network_interface_backend_address_pool_association" "deviceapo
 }
 
 resource "azurerm_network_interface_backend_address_pool_association" "passiveport2_extlb" {
-  network_interface_id    = azurerm_network_interface.passiveport2.id
+  network_interface_id    = azurerm_network_interface.devicebport2.id
   ip_configuration_name   = "ipconfig1"
   backend_address_pool_id = azurerm_lb_backend_address_pool.external_lb_backend.id
 }
