@@ -1,21 +1,23 @@
-# Deployment of a FortiGate-VM (BYOL/PAYG) Cluster on Azure in different zones
+# Deployment of a FortiGate-VM (BYOL/PAYG) ELB and ILB on Azure in different zones
 
 ## Introduction
 
-## This topology is only recommended for using with FOS 6.4.2 and later.
+## This topology is only recommended for using with FOS 7.6.1 and later.
 ## port1 - hamgmt
 ## port2 - public/untrust
 ## port3 - private/trust
 ## port4 - hasync
 
-A Terraform script to deploy a FortiGate-VM Cluster on Azure
+A Terraform script to deploy a FortiGate-VM with ILB and ELB on Azure
+
+![Architecture Diagram](./diagram.png)
 
 ## Requirements
 
-* [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) >= 0.12.0
-* Terraform Provider AzureRM >= 2.24.0
+* [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) >= 1.10.0
+* Terraform Provider AzureRM >= 4.16.0
 * Terraform Provider Template >= 2.2.0
-* Terraform Provider Random >= 3.1.0
+* Terraform Provider Random >= 3.6.3
 
 ## Deployment overview
 
@@ -61,7 +63,6 @@ Output will include the information necessary to log in to the FortiGate-VM inst
 Outputs:
 
 ActiveMGMTPublicIP = <Active FGT Management Public IP>
-ClusterPublicIP = <Cluster Public IP>
 PassiveMGMTPublicIP = <Passive FGT Management Public IP>
 Password = <FGT Password>
 ResourceGroup = <Resource Group>
@@ -78,6 +79,14 @@ terraform destroy
 ## Requirements and limitations
 
 The terms for the FortiGate PAYG or BYOL image in the Azure Marketplace needs to be accepted once before usage. This is done automatically during deployment via the Azure Portal. For the Azure CLI the commands below need to be run before the first deployment in a subscription.
+
+## Accept vm term images
+
+az vm image terms accept \
+    --publisher fortinet \
+    --offer fortinet_fortigate-vm_v5 \
+    --plan fortinet_fg-vm_payg_2023_g2
+
 
 ```sh
 BYOL az vm image terms accept --publisher fortinet --offer fortinet_fortigate-vm_v5 --plan fortinet_fg-vm
@@ -98,20 +107,23 @@ For other questions related to this project, contact [github@fortinet.com](mailt
 
 [License](https://github.com/fortinet/fortigate-terraform-deploy/blob/master/LICENSE) © Fortinet Technologies. All rights reserved.
 
+## Azure creating Service Principal
 
 ```
 az ad sp create-for-rbac \
-    --name "fortigate-tf" \
+    --name "fortigate-tf-demo" \
     --role contributor \
     --scopes /subscriptions/730184c8-d6fd-4fb1-8060-aeb6d67c7bc2 \
     --query "{client_id: appId, client_secret: password, tenant_id: tenant}" \
     -o json
 ```
+Output
 
-az ad sp list --display-name "<EXISTING-SP-NAME>" --query "[].appId" -o tsv
+```
+{
+  "client_id": "ea955302-802bbf548f9",
+  "client_secret": "3cr8QH4YH6GpQctB",
+  "tenant_id": "8635e9719ff5064f"
+}
+```
 
-
-az vm image terms accept \
-    --publisher fortinet \
-    --offer fortinet_fortigate-vm_v5 \
-    --plan fortinet_fg-vm_payg_2023_g2
