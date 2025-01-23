@@ -1,7 +1,7 @@
 // Resource Group
 
 resource "azurerm_resource_group" "myterraformgroup" {
-  name     = "tf-ha-ap-fgt"
+  name     = var.resourcegroupname
   location = var.location
 
   tags = merge(

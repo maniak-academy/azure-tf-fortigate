@@ -22,6 +22,11 @@ variable "size" {
   default = "Standard_F4s"
 }
 
+// Resource Group Name
+variable "resourcegroupname" {
+  type    = string
+  default = "fortigate-rg"
+}
 // Firewall Name
 variable "firewallname1" {
   type    = string
@@ -169,67 +174,67 @@ variable "hamgmtcidr" {
   default = "172.1.3.0/24"
 }
 
-variable "activeport1" {
+variable "deviceaport1" {
   default = "172.1.3.10"
 }
 
-variable "activeport1mask" {
+variable "deviceaport1mask" {
   default = "255.255.255.0"
 }
 
-variable "activeport2" {
+variable "deviceaport2" {
   default = "172.1.0.10"
 }
 
-variable "activeport2mask" {
+variable "deviceaport2mask" {
   default = "255.255.255.0"
 }
 
-variable "activeport3" {
+variable "deviceaport3" {
   default = "172.1.1.10"
 }
 
-variable "activeport3mask" {
+variable "deviceaport3mask" {
   default = "255.255.255.0"
 }
 
-variable "activeport4" {
+variable "deviceaport4" {
   default = "172.1.2.10"
 }
 
-variable "activeport4mask" {
+variable "deviceaport4mask" {
   default = "255.255.255.0"
 }
 
-variable "passiveport1" {
+variable "devicebport1" {
   default = "172.1.3.11"
 }
 
-variable "passiveport1mask" {
+variable "devicebport1mask" {
   default = "255.255.255.0"
 }
 
-variable "passiveport2" {
+variable "devicebport2" {
   default = "172.1.0.11"
 }
 
-variable "passiveport2mask" {
+variable "devicebport2mask" {
   default = "255.255.255.0"
 }
 
-variable "passiveport3" {
+variable "devicebport3" {
   default = "172.1.1.11"
 }
 
-variable "passiveport3mask" {
+variable "devicebport3mask" {
   default = "255.255.255.0"
 }
 
-variable "passiveport4" {
+variable "devicebport4" {
   default = "172.1.2.11"
 }
 
-variable "passiveport4mask" {
+variable "devicebport4mask" {
   default = "255.255.255.0"
 }
 
@@ -247,27 +252,27 @@ variable "ilb-ip" {
   default = "172.1.1.13"
 }
 
-variable "bootstrap-active" {
+variable "bootstrap-devicea" {
   // Change to your own path
   type    = string
   default = "config-fwA.conf"
 }
 
-variable "bootstrap-passive" {
+variable "bootstrap-deviceb" {
   // Change to your own path
   type    = string
   default = "config-fwB.conf"
 }
 
 
-// license file for the active fgt
+// license file for the devicea fgt
 variable "license" {
   // Change to your own byol license file, license.lic
   type    = string
   default = "license.txt"
 }
 
-// license file for the passive fgt
+// license file for the deviceb fgt
 variable "license2" {
   // Change to your own byol license file, license2.lic
   type    = string

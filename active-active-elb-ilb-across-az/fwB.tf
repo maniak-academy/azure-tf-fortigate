@@ -1,11 +1,11 @@
 # resource "azurerm_virtual_machine" "customfgtvmB" {
 #   depends_on                   = [azurerm_virtual_machine.customfgtvmA]
 #   count                        = var.custom ? 1 : 0
-#   name                         = "custompassivefgt"
+#   name                         = "customdevicebfgt"
 #   location                     = var.location
 #   resource_group_name          = azurerm_resource_group.myterraformgroup.name
-#   network_interface_ids        = [azurerm_network_interface.passiveport1.id, azurerm_network_interface.passiveport2.id, azurerm_network_interface.passiveport3.id, azurerm_network_interface.passiveport4.id]
-#   primary_network_interface_id = azurerm_network_interface.passiveport1.id
+#   network_interface_ids        = [azurerm_network_interface.devicebport1.id, azurerm_network_interface.devicebport2.id, azurerm_network_interface.devicebport3.id, azurerm_network_interface.devicebport4.id]
+#   primary_network_interface_id = azurerm_network_interface.devicebport1.id
 #   vm_size                      = var.size
 #   zones                        = [var.zone2]
 
@@ -17,7 +17,7 @@
 #   }
 
 #   storage_os_disk {
-#     name              = "passiveosDisk"
+#     name              = "devicebosDisk"
 #     caching           = "ReadWrite"
 #     managed_disk_type = "Standard_LRS"
 #     create_option     = "FromImage"
@@ -25,7 +25,7 @@
 
 #   # Log data disks
 #   storage_data_disk {
-#     name              = "passivedatadisk"
+#     name              = "devicebdatadisk"
 #     managed_disk_type = "Standard_LRS"
 #     create_option     = "Empty"
 #     lun               = 0
@@ -33,22 +33,22 @@
 #   }
 
 #   os_profile {
-#     computer_name  = "custompassivefgt"
+#     computer_name  = "customdevicebfgt"
 #     admin_username = var.adminusername
 #     admin_password = var.adminpassword
-#     custom_data = templatefile("${var.bootstrap-passive}", {
+#     custom_data = templatefile("${var.bootstrap-deviceb}", {
 #       type            = var.license_type
 #       license_file    = var.license2
 #       format          = "${var.license_format}"
-#       port1_ip        = var.passiveport1
-#       port1_mask      = var.passiveport1mask
-#       port2_ip        = var.passiveport2
-#       port2_mask      = var.passiveport2mask
-#       port3_ip        = var.passiveport3
-#       port3_mask      = var.passiveport3mask
-#       port4_ip        = var.passiveport4
-#       port4_mask      = var.passiveport4mask
-#       active_peerip   = var.activeport4
+#       port1_ip        = var.devicebport1
+#       port1_mask      = var.devicebport1mask
+#       port2_ip        = var.devicebport2
+#       port2_mask      = var.devicebport2mask
+#       port3_ip        = var.devicebport3
+#       port3_mask      = var.devicebport3mask
+#       port4_ip        = var.devicebport4
+#       port4_mask      = var.devicebport4mask
+#       devicea_peerip   = var.deviceaport4
 #       mgmt_gateway_ip = var.port1gateway
 #       defaultgwy      = var.port2gateway
 #       tenant          = var.tenant_id
@@ -84,8 +84,8 @@ resource "azurerm_virtual_machine" "fgtvmB" {
   name                         = var.firewallname2
   location                     = var.location
   resource_group_name          = azurerm_resource_group.myterraformgroup.name
-  network_interface_ids        = [azurerm_network_interface.passiveport1.id, azurerm_network_interface.passiveport2.id, azurerm_network_interface.passiveport3.id, azurerm_network_interface.passiveport4.id]
-  primary_network_interface_id = azurerm_network_interface.passiveport1.id
+  network_interface_ids        = [azurerm_network_interface.devicebport1.id, azurerm_network_interface.devicebport2.id, azurerm_network_interface.devicebport3.id, azurerm_network_interface.devicebport4.id]
+  primary_network_interface_id = azurerm_network_interface.devicebport1.id
   vm_size                      = var.size
   zones                        = [var.zone2]
 
@@ -107,7 +107,7 @@ resource "azurerm_virtual_machine" "fgtvmB" {
   }
 
   storage_os_disk {
-    name              = "passiveosDisk"
+    name              = "devicebosDisk"
     caching           = "ReadWrite"
     managed_disk_type = "Standard_LRS"
     create_option     = "FromImage"
@@ -115,7 +115,7 @@ resource "azurerm_virtual_machine" "fgtvmB" {
 
   # Log data disks
   storage_data_disk {
-    name              = "passivedatadisk"
+    name              = "devicebdatadisk"
     managed_disk_type = "Standard_LRS"
     create_option     = "Empty"
     lun               = 0
@@ -123,23 +123,23 @@ resource "azurerm_virtual_machine" "fgtvmB" {
   }
 
   os_profile {
-    computer_name  = "passivefgt"
+    computer_name  = "devicebfgt"
     admin_username = var.adminusername
     admin_password = var.adminpassword
-    custom_data = templatefile("${var.bootstrap-passive}", {
+    custom_data = templatefile("${var.bootstrap-deviceb}", {
       type            = var.license_type
       license_file    = var.license2
       format          = "${var.license_format}"
       firewallname2 = var.firewallname2
-      port1_ip        = var.passiveport1
-      port1_mask      = var.passiveport1mask
-      port2_ip        = var.passiveport2
-      port2_mask      = var.passiveport2mask
-      port3_ip        = var.passiveport3
-      port3_mask      = var.passiveport3mask
-      port4_ip        = var.passiveport4
-      port4_mask      = var.passiveport4mask
-      active_peerip   = var.activeport4
+      port1_ip        = var.devicebport1
+      port1_mask      = var.devicebport1mask
+      port2_ip        = var.devicebport2
+      port2_mask      = var.devicebport2mask
+      port3_ip        = var.devicebport3
+      port3_mask      = var.devicebport3mask
+      port4_ip        = var.devicebport4
+      port4_mask      = var.devicebport4mask
+      devicea_peerip   = var.deviceaport4
       mgmt_gateway_ip = var.port1gateway
       defaultgwy      = var.port2gateway
       tenant          = var.tenant_id

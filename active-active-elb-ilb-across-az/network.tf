@@ -57,8 +57,8 @@ resource "azurerm_subnet" "hamgmtsubnet" {
 #   }
 # }
 
-resource "azurerm_public_ip" "ActiveMGMTIP" {
-  name                = "ActiveMGMTIP"
+resource "azurerm_public_ip" "deviceaMGMTIP" {
+  name                = "deviceaMGMTIP"
   location            = var.location
   resource_group_name = azurerm_resource_group.myterraformgroup.name
   sku                 = "Standard"
@@ -72,8 +72,8 @@ resource "azurerm_public_ip" "ActiveMGMTIP" {
   )
 }
 
-resource "azurerm_public_ip" "PassiveMGMTIP" {
-  name                = "PassiveMGMTIP"
+resource "azurerm_public_ip" "devicebMGMTIP" {
+  name                = "devicebMGMTIP"
   location            = var.location
   resource_group_name = azurerm_resource_group.myterraformgroup.name
   sku                 = "Standard"
@@ -167,9 +167,9 @@ resource "azurerm_network_security_rule" "outgoing_private" {
 }
 
 
-// Active FGT Network Interface port1
-resource "azurerm_network_interface" "activeport1" {
-  name                = "activeport1"
+// devicea FGT Network Interface port1
+resource "azurerm_network_interface" "deviceaport1" {
+  name                = "deviceaport1"
   location            = var.location
   resource_group_name = azurerm_resource_group.myterraformgroup.name
 
@@ -177,9 +177,9 @@ resource "azurerm_network_interface" "activeport1" {
     name                          = "ipconfig1"
     subnet_id                     = azurerm_subnet.hamgmtsubnet.id
     private_ip_address_allocation = "Static"
-    private_ip_address            = var.activeport1
+    private_ip_address            = var.deviceaport1
     primary                       = true
-    public_ip_address_id          = azurerm_public_ip.ActiveMGMTIP.id
+    public_ip_address_id          = azurerm_public_ip.deviceaMGMTIP.id
   }
 
   tags = merge(
@@ -190,8 +190,8 @@ resource "azurerm_network_interface" "activeport1" {
   )
 }
 
-resource "azurerm_network_interface" "activeport2" {
-  name                  = "activeport2"
+resource "azurerm_network_interface" "deviceaport2" {
+  name                  = "deviceaport2"
   location              = var.location
   resource_group_name   = azurerm_resource_group.myterraformgroup.name
   ip_forwarding_enabled = true
@@ -200,7 +200,7 @@ resource "azurerm_network_interface" "activeport2" {
     name                          = "ipconfig1"
     subnet_id                     = azurerm_subnet.publicsubnet.id
     private_ip_address_allocation = "Static"
-    private_ip_address            = var.activeport2
+    private_ip_address            = var.deviceaport2
     #public_ip_address_id          = null
     #public_ip_address_id          = azurerm_public_ip.ClusterPublicIP.id
 
@@ -215,8 +215,8 @@ resource "azurerm_network_interface" "activeport2" {
   )
 }
 
-resource "azurerm_network_interface" "activeport3" {
-  name                  = "activeport3"
+resource "azurerm_network_interface" "deviceaport3" {
+  name                  = "deviceaport3"
   location              = var.location
   resource_group_name   = azurerm_resource_group.myterraformgroup.name
   ip_forwarding_enabled = true
@@ -225,7 +225,7 @@ resource "azurerm_network_interface" "activeport3" {
     name                          = "ipconfig1"
     subnet_id                     = azurerm_subnet.privatesubnet.id
     private_ip_address_allocation = "Static"
-    private_ip_address            = var.activeport3
+    private_ip_address            = var.deviceaport3
   }
 
   tags = merge(
@@ -236,8 +236,8 @@ resource "azurerm_network_interface" "activeport3" {
   )
 }
 
-resource "azurerm_network_interface" "activeport4" {
-  name                = "activeport4"
+resource "azurerm_network_interface" "deviceaport4" {
+  name                = "deviceaport4"
   location            = var.location
   resource_group_name = azurerm_resource_group.myterraformgroup.name
 
@@ -245,7 +245,7 @@ resource "azurerm_network_interface" "activeport4" {
     name                          = "ipconfig1"
     subnet_id                     = azurerm_subnet.hasyncsubnet.id
     private_ip_address_allocation = "Static"
-    private_ip_address            = var.activeport4
+    private_ip_address            = var.deviceaport4
   }
 
   tags = merge(
@@ -258,32 +258,32 @@ resource "azurerm_network_interface" "activeport4" {
 
 # Connect the security group to the network interfaces
 resource "azurerm_network_interface_security_group_association" "port1nsg" {
-  depends_on                = [azurerm_network_interface.activeport1]
-  network_interface_id      = azurerm_network_interface.activeport1.id
+  depends_on                = [azurerm_network_interface.deviceaport1]
+  network_interface_id      = azurerm_network_interface.deviceaport1.id
   network_security_group_id = azurerm_network_security_group.publicnetworknsg.id
 }
 
 resource "azurerm_network_interface_security_group_association" "port4nsg" {
-  depends_on                = [azurerm_network_interface.activeport4]
-  network_interface_id      = azurerm_network_interface.activeport4.id
+  depends_on                = [azurerm_network_interface.deviceaport4]
+  network_interface_id      = azurerm_network_interface.deviceaport4.id
   network_security_group_id = azurerm_network_security_group.publicnetworknsg.id
 }
 
 resource "azurerm_network_interface_security_group_association" "port2nsg" {
-  depends_on                = [azurerm_network_interface.activeport2]
-  network_interface_id      = azurerm_network_interface.activeport2.id
+  depends_on                = [azurerm_network_interface.deviceaport2]
+  network_interface_id      = azurerm_network_interface.deviceaport2.id
   network_security_group_id = azurerm_network_security_group.privatenetworknsg.id
 }
 
 resource "azurerm_network_interface_security_group_association" "port3nsg" {
-  depends_on                = [azurerm_network_interface.activeport3]
-  network_interface_id      = azurerm_network_interface.activeport3.id
+  depends_on                = [azurerm_network_interface.deviceaport3]
+  network_interface_id      = azurerm_network_interface.deviceaport3.id
   network_security_group_id = azurerm_network_security_group.privatenetworknsg.id
 }
 
-// Passive FGT Network Interface port1
-resource "azurerm_network_interface" "passiveport1" {
-  name                = "passiveport1"
+// deviceb FGT Network Interface port1
+resource "azurerm_network_interface" "devicebport1" {
+  name                = "devicebport1"
   location            = var.location
   resource_group_name = azurerm_resource_group.myterraformgroup.name
 
@@ -291,9 +291,9 @@ resource "azurerm_network_interface" "passiveport1" {
     name                          = "ipconfig1"
     subnet_id                     = azurerm_subnet.hamgmtsubnet.id
     private_ip_address_allocation = "Static"
-    private_ip_address            = var.passiveport1
+    private_ip_address            = var.devicebport1
     primary                       = true
-    public_ip_address_id          = azurerm_public_ip.PassiveMGMTIP.id
+    public_ip_address_id          = azurerm_public_ip.devicebMGMTIP.id
   }
 
   tags = merge(
@@ -304,8 +304,8 @@ resource "azurerm_network_interface" "passiveport1" {
   )
 }
 
-resource "azurerm_network_interface" "passiveport2" {
-  name                  = "passiveport2"
+resource "azurerm_network_interface" "devicebport2" {
+  name                  = "devicebport2"
   location              = var.location
   resource_group_name   = azurerm_resource_group.myterraformgroup.name
   ip_forwarding_enabled = true
@@ -314,7 +314,7 @@ resource "azurerm_network_interface" "passiveport2" {
     name                          = "ipconfig1"
     subnet_id                     = azurerm_subnet.publicsubnet.id
     private_ip_address_allocation = "Static"
-    private_ip_address            = var.passiveport2
+    private_ip_address            = var.devicebport2
   }
 
   tags = merge(
@@ -325,8 +325,8 @@ resource "azurerm_network_interface" "passiveport2" {
   )
 }
 
-resource "azurerm_network_interface" "passiveport3" {
-  name                  = "passiveport3"
+resource "azurerm_network_interface" "devicebport3" {
+  name                  = "devicebport3"
   location              = var.location
   resource_group_name   = azurerm_resource_group.myterraformgroup.name
   ip_forwarding_enabled = true
@@ -335,7 +335,7 @@ resource "azurerm_network_interface" "passiveport3" {
     name                          = "ipconfig1"
     subnet_id                     = azurerm_subnet.privatesubnet.id
     private_ip_address_allocation = "Static"
-    private_ip_address            = var.passiveport3
+    private_ip_address            = var.devicebport3
   }
 
   tags = merge(
@@ -346,8 +346,8 @@ resource "azurerm_network_interface" "passiveport3" {
   )
 }
 
-resource "azurerm_network_interface" "passiveport4" {
-  name                = "passiveport4"
+resource "azurerm_network_interface" "devicebport4" {
+  name                = "devicebport4"
   location            = var.location
   resource_group_name = azurerm_resource_group.myterraformgroup.name
 
@@ -355,7 +355,7 @@ resource "azurerm_network_interface" "passiveport4" {
     name                          = "ipconfig1"
     subnet_id                     = azurerm_subnet.hasyncsubnet.id
     private_ip_address_allocation = "Static"
-    private_ip_address            = var.passiveport4
+    private_ip_address            = var.devicebport4
   }
 
   tags = merge(
@@ -368,26 +368,26 @@ resource "azurerm_network_interface" "passiveport4" {
 
 
 # Connect the security group to the network interfaces
-resource "azurerm_network_interface_security_group_association" "passiveport1nsg" {
-  depends_on                = [azurerm_network_interface.passiveport1]
-  network_interface_id      = azurerm_network_interface.passiveport1.id
+resource "azurerm_network_interface_security_group_association" "devicebport1nsg" {
+  depends_on                = [azurerm_network_interface.devicebport1]
+  network_interface_id      = azurerm_network_interface.devicebport1.id
   network_security_group_id = azurerm_network_security_group.publicnetworknsg.id
 }
 
-resource "azurerm_network_interface_security_group_association" "passiveport4nsg" {
-  depends_on                = [azurerm_network_interface.passiveport4]
-  network_interface_id      = azurerm_network_interface.passiveport4.id
+resource "azurerm_network_interface_security_group_association" "devicebport4nsg" {
+  depends_on                = [azurerm_network_interface.devicebport4]
+  network_interface_id      = azurerm_network_interface.devicebport4.id
   network_security_group_id = azurerm_network_security_group.publicnetworknsg.id
 }
 
-resource "azurerm_network_interface_security_group_association" "passiveport2nsg" {
-  depends_on                = [azurerm_network_interface.passiveport2]
-  network_interface_id      = azurerm_network_interface.passiveport2.id
+resource "azurerm_network_interface_security_group_association" "devicebport2nsg" {
+  depends_on                = [azurerm_network_interface.devicebport2]
+  network_interface_id      = azurerm_network_interface.devicebport2.id
   network_security_group_id = azurerm_network_security_group.privatenetworknsg.id
 }
 
-resource "azurerm_network_interface_security_group_association" "passiveport3nsg" {
-  depends_on                = [azurerm_network_interface.passiveport3]
-  network_interface_id      = azurerm_network_interface.passiveport3.id
+resource "azurerm_network_interface_security_group_association" "devicebport3nsg" {
+  depends_on                = [azurerm_network_interface.devicebport3]
+  network_interface_id      = azurerm_network_interface.devicebport3.id
   network_security_group_id = azurerm_network_security_group.privatenetworknsg.id
 }

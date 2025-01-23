@@ -45,14 +45,14 @@ resource "azurerm_lb_rule" "int_lb_rule" {
   idle_timeout_in_minutes = 5
   load_distribution       = "Default"
 }
-resource "azurerm_network_interface_backend_address_pool_association" "activeport3_intlb" {
-  network_interface_id    = azurerm_network_interface.activeport3.id
+resource "azurerm_network_interface_backend_address_pool_association" "deviceaport3_intlb" {
+  network_interface_id    = azurerm_network_interface.deviceaport3.id
   ip_configuration_name   = "ipconfig1"
   backend_address_pool_id = azurerm_lb_backend_address_pool.internal_lb_backend.id
 }
 
-resource "azurerm_network_interface_backend_address_pool_association" "passiveport3_intlb" {
-  network_interface_id    = azurerm_network_interface.passiveport3.id
+resource "azurerm_network_interface_backend_address_pool_association" "devicebport3_intlb" {
+  network_interface_id    = azurerm_network_interface.devicebport3.id
   ip_configuration_name   = "ipconfig1"
   backend_address_pool_id = azurerm_lb_backend_address_pool.internal_lb_backend.id
 }

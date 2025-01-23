@@ -77,8 +77,8 @@ resource "azurerm_lb_rule" "ext_lb_rule_udp" {
 }
 
 
-resource "azurerm_network_interface_backend_address_pool_association" "activeport2_extlb" {
-  network_interface_id    = azurerm_network_interface.activeport2.id
+resource "azurerm_network_interface_backend_address_pool_association" "deviceaport2_extlb" {
+  network_interface_id    = azurerm_network_interface.deviceaport2.id
   ip_configuration_name   = "ipconfig1"
   backend_address_pool_id = azurerm_lb_backend_address_pool.external_lb_backend.id
 }

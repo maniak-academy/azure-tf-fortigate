@@ -15,11 +15,11 @@ resource "azurerm_image" "custom" {
 
 # resource "azurerm_virtual_machine" "customfgtvmA" {
 #   count                        = var.custom ? 1 : 0
-#   name                         = "customactivefgt"
+#   name                         = "customdeviceafgt"
 #   location                     = var.location
 #   resource_group_name          = azurerm_resource_group.myterraformgroup.name
-#   network_interface_ids        = [azurerm_network_interface.activeport1.id, azurerm_network_interface.activeport2.id, azurerm_network_interface.activeport3.id, azurerm_network_interface.activeport4.id]
-#   primary_network_interface_id = azurerm_network_interface.activeport1.id
+#   network_interface_ids        = [azurerm_network_interface.deviceaport1.id, azurerm_network_interface.deviceaport2.id, azurerm_network_interface.deviceaport3.id, azurerm_network_interface.deviceaport4.id]
+#   primary_network_interface_id = azurerm_network_interface.deviceaport1.id
 #   vm_size                      = var.size
 #   zones                        = [var.zone1]
 
@@ -39,7 +39,7 @@ resource "azurerm_image" "custom" {
 
 #   # Log data disks
 #   storage_data_disk {
-#     name              = "activedatadisk"
+#     name              = "deviceadatadisk"
 #     managed_disk_type = "Standard_LRS"
 #     create_option     = "Empty"
 #     lun               = 0
@@ -47,22 +47,22 @@ resource "azurerm_image" "custom" {
 #   }
 
 #   os_profile {
-#     computer_name  = "customactivefgt"
+#     computer_name  = "customdeviceafgt"
 #     admin_username = var.adminusername
 #     admin_password = var.adminpassword
-#     custom_data = templatefile("${var.bootstrap-active}", {
+#     custom_data = templatefile("${var.bootstrap-devicea}", {
 #       type            = var.license_type
 #       license_file    = var.license
 #       format          = "${var.license_format}"
-#       port1_ip        = var.activeport1
-#       port1_mask      = var.activeport1mask
-#       port2_ip        = var.activeport2
-#       port2_mask      = var.activeport2mask
-#       port3_ip        = var.activeport3
-#       port3_mask      = var.activeport3mask
-#       port4_ip        = var.activeport4
-#       port4_mask      = var.activeport4mask
-#       passive_peerip  = var.passiveport4
+#       port1_ip        = var.deviceaport1
+#       port1_mask      = var.deviceaport1mask
+#       port2_ip        = var.deviceaport2
+#       port2_mask      = var.deviceaport2mask
+#       port3_ip        = var.deviceaport3
+#       port3_mask      = var.deviceaport3mask
+#       port4_ip        = var.deviceaport4
+#       port4_mask      = var.deviceaport4mask
+#       deviceb_peerip  = var.devicebport4
 #       mgmt_gateway_ip = var.port1gateway
 #       defaultgwy      = var.port2gateway
 #       tenant          = var.tenant_id
@@ -98,8 +98,8 @@ resource "azurerm_virtual_machine" "fgtvmA" {
   name                         = var.firewallname1
   location                     = var.location
   resource_group_name          = azurerm_resource_group.myterraformgroup.name
-  network_interface_ids        = [azurerm_network_interface.activeport1.id, azurerm_network_interface.activeport2.id, azurerm_network_interface.activeport3.id, azurerm_network_interface.activeport4.id]
-  primary_network_interface_id = azurerm_network_interface.activeport1.id
+  network_interface_ids        = [azurerm_network_interface.deviceaport1.id, azurerm_network_interface.deviceaport2.id, azurerm_network_interface.deviceaport3.id, azurerm_network_interface.deviceaport4.id]
+  primary_network_interface_id = azurerm_network_interface.deviceaport1.id
   vm_size                      = var.size
   zones                        = [var.zone1]
 
@@ -122,7 +122,7 @@ resource "azurerm_virtual_machine" "fgtvmA" {
 
 
   storage_os_disk {
-    name              = "activeosDisk"
+    name              = "deviceaosDisk"
     caching           = "ReadWrite"
     managed_disk_type = "Standard_LRS"
     create_option     = "FromImage"
@@ -130,7 +130,7 @@ resource "azurerm_virtual_machine" "fgtvmA" {
 
   # Log data disks
   storage_data_disk {
-    name              = "activedatadisk"
+    name              = "deviceadatadisk"
     managed_disk_type = "Standard_LRS"
     create_option     = "Empty"
     lun               = 0
@@ -138,23 +138,23 @@ resource "azurerm_virtual_machine" "fgtvmA" {
   }
 
   os_profile {
-    computer_name  = "activefgt"
+    computer_name  = "deviceafgt"
     admin_username = var.adminusername
     admin_password = var.adminpassword
-    custom_data = templatefile("${var.bootstrap-active}", {
+    custom_data = templatefile("${var.bootstrap-devicea}", {
       type            = var.license_type
       license_file    = var.license
       format          = "${var.license_format}"
       firewallname1 = var.firewallname1
-      port1_ip        = var.activeport1
-      port1_mask      = var.activeport1mask
-      port2_ip        = var.activeport2
-      port2_mask      = var.activeport2mask
-      port3_ip        = var.activeport3
-      port3_mask      = var.activeport3mask
-      port4_ip        = var.activeport4
-      port4_mask      = var.activeport4mask
-      passive_peerip  = var.passiveport4
+      port1_ip        = var.deviceaport1
+      port1_mask      = var.deviceaport1mask
+      port2_ip        = var.deviceaport2
+      port2_mask      = var.deviceaport2mask
+      port3_ip        = var.deviceaport3
+      port3_mask      = var.deviceaport3mask
+      port4_ip        = var.deviceaport4
+      port4_mask      = var.deviceaport4mask
+      deviceb_peerip  = var.devicebport4
       mgmt_gateway_ip = var.port1gateway
       defaultgwy      = var.port2gateway
       tenant          = var.tenant_id

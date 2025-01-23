@@ -7,11 +7,11 @@ output "ResourceGroup" {
 # }
 
 output "MGMTPublicIPA" {
-  value = format("https://%s:%s", azurerm_public_ip.ActiveMGMTIP.ip_address, var.adminsport)
+  value = format("https://%s:%s", azurerm_public_ip.deviceaMGMTIP.ip_address, var.adminsport)
 }
 
 output "MGMTPublicIPB" {
-  value = format("https://%s:%s", azurerm_public_ip.PassiveMGMTIP.ip_address, var.adminsport)
+  value = format("https://%s:%s", azurerm_public_ip.devicebMGMTIP.ip_address, var.adminsport)
 }
 
 output "Username" {
