@@ -1,115 +1,96 @@
+Here's a cleaned-up version of the markup:
+
 # Deployment of a FortiGate-VM (BYOL/PAYG) ELB and ILB on Azure in different zones
 
 ## Introduction
 
-## This topology is only recommended for using with FOS 7.6.1 and later.
-## port1 - hamgmt
-## port2 - public/untrust
-## port3 - private/trust
-## port4 - hasync
+This topology is only recommended for using with FOS 7.6.1 and later.
+
+Network Port Configuration:
+- port1: hamgmt
+- port2: public/untrust
+- port3: private/trust
+- port4: hasync
 
 A Terraform script to deploy a FortiGate-VM with ILB and ELB on Azure
 
-![Architecture Diagram](./diagram.png)
-
 ## Requirements
 
-* [Terraform](https://learn.hashicorp.com/terraform/getting-started/install.html) >= 1.10.0
-* Terraform Provider AzureRM >= 4.16.0
-* Terraform Provider Template >= 2.2.0
-* Terraform Provider Random >= 3.6.3
+- Terraform >= 1.10.0
+- Terraform Provider AzureRM >= 4.16.0
+- Terraform Provider Template >= 2.2.0
+- Terraform Provider Random >= 3.6.3
 
-## Deployment overview
+## Deployment Overview
 
 Terraform deploys the following components:
+- Azure Virtual Network with 4 subnets
+- Two FortiGate-VM (BYOL/PAYG) instances with four NICs, each in different zones
+- Two firewall rules
+- A Ubuntu Client instance
 
-* Azure Virtual Network with 4 subnets
-* Two FortiGate-VM (BYOL/PAYG) instances with four NICs.  Each FortiGate-VM reside in different zones.
-* Two firewall rules.
-* A Ubuntu Client instance.
+## Deployment Steps
 
-## Deployment
+1. Clone the repository
+2. Customize variables in `terraform.tfvars.example` and `variables.tf`
+   - Rename `terraform.tfvars.example` to `terraform.tfvars`
 
-To deploy the FortiGate-VM to Azure:
-
-1. Clone the repository.
-2. Customize variables in the `terraform.tfvars.example` and `variables.tf` file as needed.  And rename `terraform.tfvars.example` to `terraform.tfvars`.
-
-3. Initialize the providers and modules:
-
+3. Initialize providers and modules:
    ```sh
    cd XXXXX
    terraform init
-    ```
+   ```
 
-4. Submit the Terraform plan:
-
+4. Submit Terraform plan:
    ```sh
    terraform plan
    ```
 
-5. Verify output.
-6. Confirm and apply the plan:
-
+5. Verify output
+6. Apply the plan:
    ```sh
    terraform apply
    ```
+7. Confirm by typing `yes`
 
-7. If output is satisfactory, type `yes`.
+Output will include:
+- Active FGT Management Public IP
+- Passive FGT Management Public IP
+- Password
+- Resource Group
+- Username
 
-Output will include the information necessary to log in to the FortiGate-VM instances:
-
-```sh
-Outputs:
-
-ActiveMGMTPublicIP = <Active FGT Management Public IP>
-PassiveMGMTPublicIP = <Passive FGT Management Public IP>
-Password = <FGT Password>
-ResourceGroup = <Resource Group>
-Username = <FGT admin>
-```
-
-## Destroy the instance
-
-To destroy the instance, use the command:
+## Destroy the Instance
 
 ```sh
 terraform destroy
 ```
-## Requirements and limitations
 
-The terms for the FortiGate PAYG or BYOL image in the Azure Marketplace needs to be accepted once before usage. This is done automatically during deployment via the Azure Portal. For the Azure CLI the commands below need to be run before the first deployment in a subscription.
+## VM Image Terms Acceptance
 
-## Accept vm term images
-
+### PAYG
+```sh
 az vm image terms accept \
     --publisher fortinet \
     --offer fortinet_fortigate-vm_v5 \
     --plan fortinet_fg-vm_payg_2023_g2
+```
 
+### BYOL
+```sh
+az vm image terms accept \
+    --publisher fortinet \
+    --offer fortinet_fortigate-vm_v5 \
+    --plan fortinet_fg-vm
+```
+
+## Fabric Connector
+
+The FortiGate-VM uses a Service Principal for the SDN Fabric Connector. A connector is created automatically during deployment.
+
+### Creating Service Principal
 
 ```sh
-BYOL az vm image terms accept --publisher fortinet --offer fortinet_fortigate-vm_v5 --plan fortinet_fg-vm
-PAYG az vm image terms accept --publisher fortinet --offer fortinet_fortigate-vm_v5 --plan fortinet_fg-vm_payg_2023
-```
-
-##Fabric Connector
-
-The FortiGate-VM uses Service Principal for the SDN Fabric Connector. A SDN Fabric Connector is created automatically during deployment.  User needs to configure the Azure Service Principal prior to the deployment.  More information can be found on the [Fortinet Documentation Libary](https://docs.fortinet.com/document/fortigate-public-cloud/7.6.0/azure-administration-guide/948968).
-
-## Support
-
-Fortinet-provided scripts in this and other GitHub projects do not fall under the regular Fortinet technical support scope and are not supported by FortiCare Support Services.
-For direct issues, please refer to the [Issues](https://github.com/fortinet/fortigate-terraform-deploy/issues) tab of this GitHub project.
-For other questions related to this project, contact [github@fortinet.com](mailto:github@fortinet.com).
-
-## License
-
-[License](https://github.com/fortinet/fortigate-terraform-deploy/blob/master/LICENSE) © Fortinet Technologies. All rights reserved.
-
-## Azure creating Service Principal
-
-```
 az ad sp create-for-rbac \
     --name "fortigate-tf-demo" \
     --role contributor \
@@ -117,13 +98,9 @@ az ad sp create-for-rbac \
     --query "{client_id: appId, client_secret: password, tenant_id: tenant}" \
     -o json
 ```
-Output
 
-```
-{
-  "client_id": "ea955302-802bbf548f9",
-  "client_secret": "3cr8QH4YH6GpQctB",
-  "tenant_id": "8635e9719ff5064f"
-}
-```
+## Support and License
 
+- Support: GitHub [Issues](https://github.com/fortinet/fortigate-terraform-deploy/issues)
+- Contact: [github@fortinet.com](mailto:github@fortinet.com)
+- License: [GitHub License](https://github.com/fortinet/fortigate-terraform-deploy/blob/master/LICENSE)
