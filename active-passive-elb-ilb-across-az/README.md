@@ -6,6 +6,8 @@ Here's a cleaned-up version of the markup:
 
 This topology is only recommended for using with FOS 7.6.1 and later.
 
+![Architecture Diagram](./diagram.png)
+
 Network Port Configuration:
 - port1: hamgmt
 - port2: public/untrust
