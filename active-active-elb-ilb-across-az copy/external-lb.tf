@@ -48,6 +48,7 @@ resource "azurerm_lb_probe" "ext_lb_probe" {
   # Adjust for your FGT actual service or dedicated health-check port
 }
 
+
 resource "azurerm_lb_rule" "ext_lb_rule_tcp" {
   name            = "ext-lb-rule-tcp"
   loadbalancer_id = azurerm_lb.external_lb.id
@@ -75,7 +76,6 @@ resource "azurerm_lb_rule" "ext_lb_rule_udp" {
 
   enable_floating_ip = true
 }
-
 
 resource "azurerm_network_interface_backend_address_pool_association" "activeport2_extlb" {
   network_interface_id    = azurerm_network_interface.activeport2.id
