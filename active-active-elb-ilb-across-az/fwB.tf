@@ -1,5 +1,5 @@
-# resource "azurerm_virtual_machine" "custompassivefgtvm" {
-#   depends_on                   = [azurerm_virtual_machine.customactivefgtvm]
+# resource "azurerm_virtual_machine" "customfgtvmB" {
+#   depends_on                   = [azurerm_virtual_machine.customfgtvmA]
 #   count                        = var.custom ? 1 : 0
 #   name                         = "custompassivefgt"
 #   location                     = var.location
@@ -78,10 +78,10 @@
 # }
 
 
-resource "azurerm_virtual_machine" "passivefgtvm" {
-  depends_on                   = [azurerm_virtual_machine.activefgtvm]
+resource "azurerm_virtual_machine" "fgtvmB" {
+  depends_on                   = [azurerm_virtual_machine.fgtvmA]
   count                        = var.custom ? 0 : 1
-  name                         = "passivefgt"
+  name                         = var.firewallname2
   location                     = var.location
   resource_group_name          = azurerm_resource_group.myterraformgroup.name
   network_interface_ids        = [azurerm_network_interface.passiveport1.id, azurerm_network_interface.passiveport2.id, azurerm_network_interface.passiveport3.id, azurerm_network_interface.passiveport4.id]
@@ -130,6 +130,7 @@ resource "azurerm_virtual_machine" "passivefgtvm" {
       type            = var.license_type
       license_file    = var.license2
       format          = "${var.license_format}"
+      firewallname2 = var.firewallname2
       port1_ip        = var.passiveport1
       port1_mask      = var.passiveport1mask
       port2_ip        = var.passiveport2
@@ -146,6 +147,8 @@ resource "azurerm_virtual_machine" "passivefgtvm" {
       clientid        = var.client_id
       clientsecret    = var.client_secret
       adminsport      = var.adminsport
+      port2gateway    = var.port2gateway
+      port3gateway    = var.port3gateway
       rsg             = azurerm_resource_group.myterraformgroup.name
       #clusterip       = azurerm_public_ip.ClusterPublicIP.name
       ilb-ip    = var.ilb-ip

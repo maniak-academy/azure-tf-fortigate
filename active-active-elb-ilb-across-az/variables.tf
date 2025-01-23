@@ -22,6 +22,18 @@ variable "size" {
   default = "Standard_F4s"
 }
 
+// Firewall Name
+variable "firewallname1" {
+  type    = string
+  default = "fgt-fw1" 
+}
+
+// Firewall Name
+variable "firewallname2" {
+  type    = string
+  default = "fgt-fw2" 
+}
+
 // Availability zones only support in certain regions
 // Check: https://docs.microsoft.com/en-us/azure/availability-zones/az-overview
 variable "zone1" {
@@ -238,13 +250,13 @@ variable "ilb-ip" {
 variable "bootstrap-active" {
   // Change to your own path
   type    = string
-  default = "config-active.conf"
+  default = "config-fwA.conf"
 }
 
 variable "bootstrap-passive" {
   // Change to your own path
   type    = string
-  default = "config-passive.conf"
+  default = "config-fwB.conf"
 }
 
 

@@ -13,7 +13,7 @@ resource "azurerm_image" "custom" {
 }
 
 
-# resource "azurerm_virtual_machine" "customactivefgtvm" {
+# resource "azurerm_virtual_machine" "customfgtvmA" {
 #   count                        = var.custom ? 1 : 0
 #   name                         = "customactivefgt"
 #   location                     = var.location
@@ -93,9 +93,9 @@ resource "azurerm_image" "custom" {
 
 
 
-resource "azurerm_virtual_machine" "activefgtvm" {
+resource "azurerm_virtual_machine" "fgtvmA" {
   count                        = var.custom ? 0 : 1
-  name                         = "activefgt"
+  name                         = var.firewallname1
   location                     = var.location
   resource_group_name          = azurerm_resource_group.myterraformgroup.name
   network_interface_ids        = [azurerm_network_interface.activeport1.id, azurerm_network_interface.activeport2.id, azurerm_network_interface.activeport3.id, azurerm_network_interface.activeport4.id]
@@ -145,6 +145,7 @@ resource "azurerm_virtual_machine" "activefgtvm" {
       type            = var.license_type
       license_file    = var.license
       format          = "${var.license_format}"
+      firewallname1 = var.firewallname1
       port1_ip        = var.activeport1
       port1_mask      = var.activeport1mask
       port2_ip        = var.activeport2
@@ -161,6 +162,8 @@ resource "azurerm_virtual_machine" "activefgtvm" {
       clientid        = var.client_id
       clientsecret    = var.client_secret
       adminsport      = var.adminsport
+      port2gateway    = var.port2gateway
+      port3gateway    = var.port3gateway
       rsg             = azurerm_resource_group.myterraformgroup.name
       # clusterip       = azurerm_public_ip.ClusterPublicIP.name
       ilb-ip    = var.ilb-ip

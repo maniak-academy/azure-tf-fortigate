@@ -5,7 +5,7 @@ resource "azurerm_public_ip" "external_lb_public_ip" {
   sku                 = "Standard"
   allocation_method   = "Static"
   # Optionally set zones if you have zone redundancy:
-  # zones             = [var.zone1, var.zone2]
+  zones             = [var.zone1, var.zone2]
 
   tags = merge(
     var.common_tags,
@@ -55,7 +55,7 @@ resource "azurerm_lb_rule" "ext_lb_rule_tcp" {
   protocol                       = "Tcp"
   frontend_port                  = 443
   backend_port                   = 443
-  frontend_ip_configuration_name = "externalFrontend-tcp"
+  frontend_ip_configuration_name = "externalFrontend"
   backend_address_pool_ids       = [azurerm_lb_backend_address_pool.external_lb_backend.id]
   probe_id                       = azurerm_lb_probe.ext_lb_probe.id
 
@@ -69,7 +69,7 @@ resource "azurerm_lb_rule" "ext_lb_rule_udp" {
   protocol                       = "Udp"
   frontend_port                  = 10551
   backend_port                   = 10551
-  frontend_ip_configuration_name = "externalFrontend-udp"
+  frontend_ip_configuration_name = "externalFrontend"
   backend_address_pool_ids       = [azurerm_lb_backend_address_pool.external_lb_backend.id]
   probe_id                       = azurerm_lb_probe.ext_lb_probe.id
 

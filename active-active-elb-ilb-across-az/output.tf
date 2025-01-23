@@ -6,11 +6,11 @@ output "ResourceGroup" {
 #   value = azurerm_public_ip.ClusterPublicIP.ip_address
 # }
 
-output "ActiveMGMTPublicIP" {
+output "MGMTPublicIPA" {
   value = format("https://%s:%s", azurerm_public_ip.ActiveMGMTIP.ip_address, var.adminsport)
 }
 
-output "PassiveMGMTPublicIP" {
+output "MGMTPublicIPB" {
   value = format("https://%s:%s", azurerm_public_ip.PassiveMGMTIP.ip_address, var.adminsport)
 }
 
