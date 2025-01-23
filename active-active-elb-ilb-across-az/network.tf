@@ -236,25 +236,25 @@ resource "azurerm_network_interface" "deviceaport3" {
   )
 }
 
-resource "azurerm_network_interface" "deviceaport4" {
-  name                = "deviceaport4"
-  location            = var.location
-  resource_group_name = azurerm_resource_group.myterraformgroup.name
+# resource "azurerm_network_interface" "deviceaport4" {
+#   name                = "deviceaport4"
+#   location            = var.location
+#   resource_group_name = azurerm_resource_group.myterraformgroup.name
 
-  ip_configuration {
-    name                          = "ipconfig1"
-    subnet_id                     = azurerm_subnet.hasyncsubnet.id
-    private_ip_address_allocation = "Static"
-    private_ip_address            = var.deviceaport4
-  }
+#   ip_configuration {
+#     name                          = "ipconfig1"
+#     subnet_id                     = azurerm_subnet.hasyncsubnet.id
+#     private_ip_address_allocation = "Static"
+#     private_ip_address            = var.deviceaport4
+#   }
 
-  tags = merge(
-    var.common_tags,
-    {
-      "additional_tag_key" = "additional_tag_value"
-    }
-  )
-}
+#   tags = merge(
+#     var.common_tags,
+#     {
+#       "additional_tag_key" = "additional_tag_value"
+#     }
+#   )
+# }
 
 # Connect the security group to the network interfaces
 resource "azurerm_network_interface_security_group_association" "port1nsg" {
@@ -263,11 +263,11 @@ resource "azurerm_network_interface_security_group_association" "port1nsg" {
   network_security_group_id = azurerm_network_security_group.publicnetworknsg.id
 }
 
-resource "azurerm_network_interface_security_group_association" "port4nsg" {
-  depends_on                = [azurerm_network_interface.deviceaport4]
-  network_interface_id      = azurerm_network_interface.deviceaport4.id
-  network_security_group_id = azurerm_network_security_group.publicnetworknsg.id
-}
+# resource "azurerm_network_interface_security_group_association" "port4nsg" {
+#   depends_on                = [azurerm_network_interface.deviceaport4]
+#   network_interface_id      = azurerm_network_interface.deviceaport4.id
+#   network_security_group_id = azurerm_network_security_group.publicnetworknsg.id
+# }
 
 resource "azurerm_network_interface_security_group_association" "port2nsg" {
   depends_on                = [azurerm_network_interface.deviceaport2]
@@ -346,25 +346,25 @@ resource "azurerm_network_interface" "devicebport3" {
   )
 }
 
-resource "azurerm_network_interface" "devicebport4" {
-  name                = "devicebport4"
-  location            = var.location
-  resource_group_name = azurerm_resource_group.myterraformgroup.name
+# resource "azurerm_network_interface" "devicebport4" {
+#   name                = "devicebport4"
+#   location            = var.location
+#   resource_group_name = azurerm_resource_group.myterraformgroup.name
 
-  ip_configuration {
-    name                          = "ipconfig1"
-    subnet_id                     = azurerm_subnet.hasyncsubnet.id
-    private_ip_address_allocation = "Static"
-    private_ip_address            = var.devicebport4
-  }
+#   ip_configuration {
+#     name                          = "ipconfig1"
+#     subnet_id                     = azurerm_subnet.hasyncsubnet.id
+#     private_ip_address_allocation = "Static"
+#     private_ip_address            = var.devicebport4
+#   }
 
-  tags = merge(
-    var.common_tags,
-    {
-      "additional_tag_key" = "additional_tag_value"
-    }
-  )
-}
+#   tags = merge(
+#     var.common_tags,
+#     {
+#       "additional_tag_key" = "additional_tag_value"
+#     }
+#   )
+# }
 
 
 # Connect the security group to the network interfaces
@@ -374,11 +374,11 @@ resource "azurerm_network_interface_security_group_association" "devicebport1nsg
   network_security_group_id = azurerm_network_security_group.publicnetworknsg.id
 }
 
-resource "azurerm_network_interface_security_group_association" "devicebport4nsg" {
-  depends_on                = [azurerm_network_interface.devicebport4]
-  network_interface_id      = azurerm_network_interface.devicebport4.id
-  network_security_group_id = azurerm_network_security_group.publicnetworknsg.id
-}
+# resource "azurerm_network_interface_security_group_association" "devicebport4nsg" {
+#   depends_on                = [azurerm_network_interface.devicebport4]
+#   network_interface_id      = azurerm_network_interface.devicebport4.id
+#   network_security_group_id = azurerm_network_security_group.publicnetworknsg.id
+# }
 
 resource "azurerm_network_interface_security_group_association" "devicebport2nsg" {
   depends_on                = [azurerm_network_interface.devicebport2]

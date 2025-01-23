@@ -98,7 +98,7 @@ resource "azurerm_virtual_machine" "fgtvmA" {
   name                         = var.firewallname1
   location                     = var.location
   resource_group_name          = azurerm_resource_group.myterraformgroup.name
-  network_interface_ids        = [azurerm_network_interface.deviceaport1.id, azurerm_network_interface.deviceaport2.id, azurerm_network_interface.deviceaport3.id, azurerm_network_interface.deviceaport4.id]
+  network_interface_ids        = [azurerm_network_interface.deviceaport1.id, azurerm_network_interface.deviceaport2.id, azurerm_network_interface.deviceaport3.id]
   primary_network_interface_id = azurerm_network_interface.deviceaport1.id
   vm_size                      = var.size
   zones                        = [var.zone1]
@@ -152,9 +152,9 @@ resource "azurerm_virtual_machine" "fgtvmA" {
       port2_mask      = var.deviceaport2mask
       port3_ip        = var.deviceaport3
       port3_mask      = var.deviceaport3mask
-      port4_ip        = var.deviceaport4
-      port4_mask      = var.deviceaport4mask
-      deviceb_peerip  = var.devicebport4
+      # port4_ip        = var.deviceaport4
+      # port4_mask      = var.deviceaport4mask
+      # deviceb_peerip  = var.devicebport4
       mgmt_gateway_ip = var.port1gateway
       defaultgwy      = var.port2gateway
       tenant          = var.tenant_id

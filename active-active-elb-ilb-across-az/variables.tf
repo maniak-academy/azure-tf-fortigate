@@ -198,13 +198,13 @@ variable "deviceaport3mask" {
   default = "255.255.255.0"
 }
 
-variable "deviceaport4" {
-  default = "172.1.2.10"
-}
+# variable "deviceaport4" {
+#   default = "172.1.2.10"
+# }
 
-variable "deviceaport4mask" {
-  default = "255.255.255.0"
-}
+# variable "deviceaport4mask" {
+#   default = "255.255.255.0"
+# }
 
 variable "devicebport1" {
   default = "172.1.3.11"
@@ -230,13 +230,13 @@ variable "devicebport3mask" {
   default = "255.255.255.0"
 }
 
-variable "devicebport4" {
-  default = "172.1.2.11"
-}
+# variable "devicebport4" {
+#   default = "172.1.2.11"
+# }
 
-variable "devicebport4mask" {
-  default = "255.255.255.0"
-}
+# variable "devicebport4mask" {
+#   default = "255.255.255.0"
+# }
 
 variable "port1gateway" {
   default = "172.1.3.1"
