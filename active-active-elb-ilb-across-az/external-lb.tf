@@ -5,7 +5,7 @@ resource "azurerm_public_ip" "external_lb_public_ip" {
   sku                 = "Standard"
   allocation_method   = "Static"
   # Optionally set zones if you have zone redundancy:
-  zones             = [var.zone1, var.zone2]
+  zones = [var.zone1, var.zone2]
 
   tags = merge(
     var.common_tags,

@@ -30,13 +30,13 @@ variable "resourcegroupname" {
 // Firewall Name
 variable "firewallname1" {
   type    = string
-  default = "fgt-fw1" 
+  default = "fgt-fw1"
 }
 
 // Firewall Name
 variable "firewallname2" {
   type    = string
-  default = "fgt-fw2" 
+  default = "fgt-fw2"
 }
 
 // Availability zones only support in certain regions
