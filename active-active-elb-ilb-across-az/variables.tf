@@ -255,13 +255,13 @@ variable "ilb-ip" {
 variable "bootstrap-devicea" {
   // Change to your own path
   type    = string
-  default = "config-fwA.conf"
+  default = "config-active.conf"
 }
 
 variable "bootstrap-deviceb" {
   // Change to your own path
   type    = string
-  default = "config-fwB.conf"
+  default = "config-passive.conf"
 }
 
 
